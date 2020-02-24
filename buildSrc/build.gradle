@@ -1,0 +1,33 @@
+apply plugin: 'groovy'
+
+dependencies {
+    //gradle sdk
+    implementation gradleApi()
+    //groovy sdk
+    implementation localGroovy()
+
+    implementation 'com.android.tools.build:gradle:3.5.3'
+
+    implementation 'org.javassist:javassist:3.21.0-GA'
+}
+
+//以下内容主要用于发布插件
+apply plugin: 'maven'
+repositories {
+    google()
+    jcenter()
+    mavenCentral()
+}
+group = 'com.demo.myplugin'
+version = '1.0.0'
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('./../repo'))
+            pom.artifactId = "demoplugin"
+        }
+    }
+}
+
+//./gradlew buildsrc:uploadArchives
